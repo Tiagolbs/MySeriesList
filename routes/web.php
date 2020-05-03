@@ -17,12 +17,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('serieslist', 'seriesListController@index');
-Route::get('serieslist/create', 'seriesListController@create');
-Route::post('serieslist/store', 'seriesListController@store');
-Route::get('serieslist/{id}/destroy', 'seriesListController@destroy');
-Route::get('serieslist/{id}/edit', 'seriesListController@edit');
-Route::put('serieslist/{id}/update', 'seriesListController@update');
+
+Route::group(['prefix'=>'serieslist', 'where'=>['id'=>'[0-9]+']], function() {
+    Route::get('',                  ['as'=>'serieslist',           'uses'=>'seriesListController@index']);
+    Route::get('create',            ['as'=>'serieslist.create',    'uses'=>'seriesListController@create']);
+    Route::get('{id}/destroy',      ['as'=>'serieslist.destroy',   'uses'=>'seriesListController@destroy']);
+    Route::get('{id}/edit',         ['as'=>'serieslist.edit',      'uses'=>'seriesListController@edit']);
+    Route::put('{id}/update',       ['as'=>'serieslist.update',    'uses'=>'seriesListController@update']);
+    Route::post('store',             ['as'=>'serieslist.store',     'uses'=>'seriesListController@store']);
+    Route::get('noDate',                  ['as'=>'serieslist.noDate',           'uses'=>'seriesListController@noDate']);
+});
 
 Route::get('series', 'seriesController@index');
 Route::get('series/create', 'seriesController@create');
