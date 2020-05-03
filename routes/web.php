@@ -18,6 +18,15 @@ Route::get('/', function () {
 });
 
 Route::get('serieslist', 'seriesListController@index');
+Route::get('serieslist/create', 'seriesListController@create');
+Route::post('serieslist/store', 'seriesListController@store');
+Route::get('serieslist/{id}/destroy', 'seriesListController@destroy');
+Route::get('serieslist/{id}/edit', 'seriesListController@edit');
+Route::put('serieslist/{id}/update', 'seriesListController@update');
+
+Route::get('series', 'seriesController@index');
+Route::get('series/create', 'seriesController@create');
+Route::post('series/store', 'seriesController@store');
 
 Route::get('movieslist', 'moviesListController@index');
 
