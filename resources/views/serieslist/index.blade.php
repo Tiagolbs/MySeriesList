@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.default')
 
 @section('content')
         <h1>Series</h1>
@@ -10,6 +10,7 @@
                 <th>Eps</th>
                 <th>Total Eps</th>
                 <th>Status</th>
+                <th>Actions</th>
             </thead>
 
             <tbody>
@@ -21,8 +22,15 @@
                         <td style="width:20%">{{$serie->epsAssistidos}}</td>
                         <td style="width:10%">{{$serie->epsTotais}}</td>
                         <td style="width:10%">{{$serie->status}}</td>
+                        <td> 
+                             <a href="{{ route('serieslist.edit', ['id'=>$serie->id]) }}" class="btn-sm btn-success">Edit</a>
+                             <a href="#" onclick="return ConfirmaExclusao({{$serie->id}})" class="btn-sm btn-danger">Delete</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+
+        {{$series->links()}}
+        
 @stop
