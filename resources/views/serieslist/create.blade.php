@@ -2,11 +2,11 @@
 
 @section('content')
     <h3>New Serie</h3>
-    {!! Form::open(['url'=>'serieslist/store']) !!}
+    {!! Form::open(['route'=>'serieslist.store']) !!}
 
-        <div class="form-group">
+        <div hidden class="form-group">
             {!! Form::label('idUser', 'idUser:') !!}
-            {!! Form::text('idUser', null, ['class'=>'form-control', 'required']) !!}
+            {!! Form::text('idUser', auth()->user()->id, ['class'=>'form-control', 'required', 'readonly']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('idSerie', 'idSerie:') !!}
@@ -27,8 +27,8 @@
         <div class="form-group">
             {!! Form::label('status', 'Status:') !!}
             {!! Form::select('status',
-                            array('Complete',
-                                  'Watching'),
+                            array('Complete'=>'Complete',
+                                  'Watching'=>'Watching'),
                             'Watching', ['class'=>'form-control','required'])!!}
         </div>
         <div class="form-group">
