@@ -26,7 +26,3 @@
         }
     </script>
 @stop
-
-@section('table-delete')
-"list_series"
-@endsection
