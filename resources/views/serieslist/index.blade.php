@@ -1,11 +1,12 @@
 @extends('layouts.default')
 
 @section('content')
-        <h1>Series</h1>
-        <div style="border: 3px solid #343A40;margin: auto; padding: 10px">
-            <a href="{{ route('serieslist')}}" class="btn btn-outline-primary btn-sm"><b>ALL SERIES</b></a>
-            <a href="{{ route('serieslist.onlyWatching')}}" class="btn btn-outline-primary btn-sm"><b>CURRENTLY WATCHING</b></a>
-            <a href="{{ route('serieslist.onlyCompleted')}}" class="btn btn-outline-primary btn-sm"><b>COMPLETED SERIES</b></a>
+        <center><h1 style="font-family:fantasy">SERIES</h1></center>
+        <div style="margin: auto; padding: 10px; text-align:center">
+            <a href="{{ route('serieslist')}}" class="btn btn-outline-secondary btn-lg "><b>ALL SERIES</b></a>
+            <a href="{{ route('serieslist.onlyWatching')}}" class="btn btn-outline-secondary btn-lg"><b>CURRENTLY WATCHING</b></a>
+            <a href="{{ route('serieslist.onlyPlanToWatch')}}" class="btn btn-outline-secondary btn-lg"><b>PLAN TO WATCH</b></a>
+            <a href="{{ route('serieslist.onlyCompleted')}}" class="btn btn-outline-secondary btn-lg"><b>COMPLETED SERIES</b></a>
         </div>
         <table class="table table-strip table-bordered table-hover">
             <thead>
@@ -15,7 +16,7 @@
                 <th>Status</th>
                 <th>Started Date</th>
                 <th>Last Update</th>
-                <th>Actions</th>
+                <th></th>
             </thead>
 
             <tbody>
@@ -32,7 +33,7 @@
                         <td style="text-align:center; vertical-align:middle"><b>{{Carbon\Carbon::parse($serie->createdate)->format('d/m/Y')}}</b></td>
                         <td style="text-align:center; vertical-align:middle"><b>{{Carbon\Carbon::parse($serie->lastupdate)->format('d/m/Y')}}</b></td>
                         <td style="text-align:center; vertical-align:middle;"> 
-                             <a style="font-size:30px; display:block" href="#" onclick="return ConfirmaExclusao({{$serie->id}})" class="btn-sm btn-danger"><b>DELETE</b></a>
+                             <a style="font-size:20px;" href="#" onclick="return ConfirmaExclusao({{$serie->id}})" class="btn btn-outline-danger"><b>DELETE</b></a>
                         </td>
                     </tr>
                 @endforeach

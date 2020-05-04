@@ -28,7 +28,8 @@
             {!! Form::label('status', 'Status:') !!}
             {!! Form::select('status',
                             array('Completed'=>'Completed',
-                                  'Watching'=>'Watching'),
+                                  'Watching'=>'Watching',
+                                  'Plan to Watch'=> 'Plan to Watch'),
                             'Watching', ['class'=>'form-control','required'])!!}
         </div>
         <div class="form-group">
