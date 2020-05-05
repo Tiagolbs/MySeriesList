@@ -28,8 +28,9 @@ Route::group(['prefix'=>'serieslist', 'where'=>['id'=>'[0-9]+']], function() {
     Route::get('{id}/addEp',        ['as'=>'serieslist.addEp',              'uses'=>'seriesListController@addEp']);
     Route::get('{id}/removeEp',     ['as'=>'serieslist.removeEp',           'uses'=>'seriesListController@removeEp']);
     Route::get('completed',         ['as'=>'serieslist.onlyCompleted',      'uses'=>'seriesListController@onlyCompleted']);
-    Route::get('watching',         ['as'=>'serieslist.onlyWatching',        'uses'=>'seriesListController@onlyWatching']);
-    Route::get('plantowatch',         ['as'=>'serieslist.onlyPlanToWatch',  'uses'=>'seriesListController@onlyPlanToWatch']);
+    Route::get('watching',          ['as'=>'serieslist.onlyWatching',       'uses'=>'seriesListController@onlyWatching']);
+    Route::get('plantowatch',       ['as'=>'serieslist.onlyPlanToWatch',    'uses'=>'seriesListController@onlyPlanToWatch']);
+    Route::get('noUser',            ['as'=>'serieslist.noUser',             'uses'=>'seriesListController@noUser']);
 });
 
 Route::get('series', 'seriesController@index');
