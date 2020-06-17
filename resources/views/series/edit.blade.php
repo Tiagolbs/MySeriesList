@@ -33,10 +33,6 @@
             {!! Form::text('poster', null, ['class'=>'form-control', 'required']) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('epTime', 'Ep Time:') !!}
-            {!! Form::text('epTime', null, ['class'=>'form-control', 'required']) !!}
-        </div>
-        <div class="form-group">
             {!! Form::submit('Create Serie', ['class' => 'btn btn-primary']) !!}
             {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
         </div>
