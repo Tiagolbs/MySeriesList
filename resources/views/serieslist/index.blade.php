@@ -8,6 +8,20 @@
             <a href="{{ route('serieslist.onlyPlanToWatch')}}" class="btn btn-outline-secondary btn-lg"><b>PLAN TO WATCH</b></a>
             <a href="{{ route('serieslist.onlyCompleted')}}" class="btn btn-outline-secondary btn-lg"><b>COMPLETED SERIES</b></a>
         </div>
+
+        {!! Form::open(['name'=>'form_name', 'route'=>'serieslist']) !!}
+            <div class="sidebar-form" style="width:100%">
+                <div class="input-group" style="width:45%; margin:auto">
+                    <input type="text" name="desc_filtro" class="form-control" style="width:80% !important;" placeholder="Search by name">
+                    <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </div>
+        {!! Form::close() !!}
+        
+        <br>
+
         <table class="table table-strip table-bordered table-hover">
             <thead>
                 <th>Poster</th>
@@ -33,7 +47,8 @@
                         <td style="text-align:center; vertical-align:middle"><b>{{Carbon\Carbon::parse($serie->createdate)->format('d/m/Y')}}</b></td>
                         <td style="text-align:center; vertical-align:middle"><b>{{Carbon\Carbon::parse($serie->lastupdate)->format('d/m/Y')}}</b></td>
                         <td style="text-align:center; vertical-align:middle;"> 
-                             <a style="font-size:20px;" href="#" onclick="return ConfirmaExclusao({{$serie->id}})" class="btn btn-outline-danger"><b>DELETE</b></a>
+                             <a style="font-size:20px;" href="{{route('serieslist.edit', ['id'=>$serie->id]) }}" class="btn btn-outline-primary"><b>EDIT</b></a>
+                             <a id="btnDelete" style="font-size:20px;" href="#" onclick="return ConfirmaExclusao({{$serie->id}})" class="btn btn-outline-danger"><b>DELETE</b></a>
                         </td>
                     </tr>
                 @endforeach
