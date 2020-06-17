@@ -208,6 +208,7 @@ return [
     */
 
     'menu' => [
+        ['header' => ' '],
         ['header' => 'LISTS'],
         [
             'text' => 'Series List',
@@ -218,6 +219,17 @@ return [
             'text' => 'Movies List',
             'url' => 'movieslist',       
             'icon' => 'fas fa-fw fa-play',
+        ],
+        ['header' => 'ACCOUNT SETTINGS'],
+        [
+            'text' => 'Edit Account',
+            'url' => 'user/edit',       
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Status',
+            'url' => 'user/status',       
+            'icon' => 'fas fa-fw fa-user',
         ],
         // [
         //     'text' => 'search',
