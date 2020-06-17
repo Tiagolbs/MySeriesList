@@ -17,28 +17,40 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(['middleware'=>'auth'], function() {
+    Route::group(['prefix'=>'serieslist', 'where'=>['id'=>'[0-9]+']], function() {
+        Route::any('',                  ['as'=>'serieslist',                    'uses'=>'seriesListController@index']);
+        Route::get('create',            ['as'=>'serieslist.create',             'uses'=>'seriesListController@create']);
+        Route::get('{id}/destroy',      ['as'=>'serieslist.destroy',            'uses'=>'seriesListController@destroy']);
+        Route::get('{id}/edit',         ['as'=>'serieslist.edit',               'uses'=>'seriesListController@edit']);
+        Route::put('{id}/update',       ['as'=>'serieslist.update',             'uses'=>'seriesListController@update']);
+        Route::post('store',            ['as'=>'serieslist.store',              'uses'=>'seriesListController@store']);
+        Route::get('{id}/addEp',        ['as'=>'serieslist.addEp',              'uses'=>'seriesListController@addEp']);
+        Route::get('{id}/removeEp',     ['as'=>'serieslist.removeEp',           'uses'=>'seriesListController@removeEp']);
+        Route::get('completed',         ['as'=>'serieslist.onlyCompleted',      'uses'=>'seriesListController@onlyCompleted']);
+        Route::get('watching',          ['as'=>'serieslist.onlyWatching',       'uses'=>'seriesListController@onlyWatching']);
+        Route::get('plantowatch',       ['as'=>'serieslist.onlyPlanToWatch',    'uses'=>'seriesListController@onlyPlanToWatch']);
+    });
 
-Route::group(['prefix'=>'serieslist', 'where'=>['id'=>'[0-9]+']], function() {
-    Route::get('',                  ['as'=>'serieslist',                    'uses'=>'seriesListController@index']);
-    Route::get('create',            ['as'=>'serieslist.create',             'uses'=>'seriesListController@create']);
-    Route::get('{id}/destroy',      ['as'=>'serieslist.destroy',            'uses'=>'seriesListController@destroy']);
-    Route::get('{id}/edit',         ['as'=>'serieslist.edit',               'uses'=>'seriesListController@edit']);
-    Route::put('{id}/update',       ['as'=>'serieslist.update',             'uses'=>'seriesListController@update']);
-    Route::post('store',            ['as'=>'serieslist.store',              'uses'=>'seriesListController@store']);
-    Route::get('{id}/addEp',        ['as'=>'serieslist.addEp',              'uses'=>'seriesListController@addEp']);
-    Route::get('{id}/removeEp',     ['as'=>'serieslist.removeEp',           'uses'=>'seriesListController@removeEp']);
-    Route::get('completed',         ['as'=>'serieslist.onlyCompleted',      'uses'=>'seriesListController@onlyCompleted']);
-    Route::get('watching',          ['as'=>'serieslist.onlyWatching',       'uses'=>'seriesListController@onlyWatching']);
-    Route::get('plantowatch',       ['as'=>'serieslist.onlyPlanToWatch',    'uses'=>'seriesListController@onlyPlanToWatch']);
-    Route::get('noUser',            ['as'=>'serieslist.noUser',             'uses'=>'seriesListController@noUser']);
+    Route::group(['prefix'=>'user', 'where'=>['id'=>'[0-9]+']], function() {
+        Route::get('status',              ['as'=>'user.index',             'uses'=>'UserController@index']);
+        Route::get('edit',              ['as'=>'user.edit',             'uses'=>'UserController@edit']);
+        Route::put('update',              ['as'=>'user.update',             'uses'=>'UserController@update']);
+    });
 });
+
+Route::group(['prefix'=>'user', 'where'=>['id'=>'[0-9]+']], function() {
+    Route::get('{name}/status',            ['as'=>'user.status',             'uses'=>'UserController@status']);
+    Route::get('{name}/serieslist',            ['as'=>'user.publicList',             'uses'=>'UserController@publicList']);
+});
+
+
+
+
 
 Route::get('series', 'seriesController@index');
 Route::get('series/create', 'seriesController@create');
 Route::post('series/store', 'seriesController@store');
-
 Route::get('movieslist', 'moviesListController@index');
-
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
