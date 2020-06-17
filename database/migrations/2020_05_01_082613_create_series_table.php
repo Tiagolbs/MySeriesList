@@ -22,6 +22,7 @@ class CreateSeriesTable extends Migration
             $table->string('generoSerie', 100);
             $table->float('notaSerie');
             $table->string('poster', 9999);
+            $table->float('epTime');
             $table->timestamps();
         });
     }
