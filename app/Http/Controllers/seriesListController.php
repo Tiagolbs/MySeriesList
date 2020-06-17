@@ -5,18 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\listSerie;
 use Auth;
+use App\Http\Requests\ListSeriesRequest;
+use App\Serie;
+use App\User;
 
 class seriesListController extends Controller
 {
-    public function index() {
-        if(Auth::guest()){
-            return view('serieslist.noUser');
+    public function index(Request $filtro) {
+        $filtragem = $filtro->get('desc_filtro');
+        if($filtragem == NULL){
+            $series = listSerie::join('series', 'series.idSerie', '=', 'list_series.idSerie')
+                                ->where('list_series.idUser', auth()->user()->id)
+                                ->select('list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
+                                ->orderBy('status', 'desc')->paginate(10);
         }
-        $series = listSerie::join('series', 'series.idSerie', '=', 'list_series.idSerie')
-                            ->where('list_series.idUser', auth()->user()->id)
-                            ->select('list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
-                            ->orderBy('status', 'desc')->paginate(10);
-        
+        else{
+            $series = listSerie::join('series', 'series.idSerie', '=', 'list_series.idSerie')
+                                    ->where('list_series.idUser', auth()->user()->id)
+                                    ->select('list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
+                                    ->where('nomeSerie', 'like', '%'.$filtragem.'%')
+                                    ->orderBy('status', 'desc')->paginate(10)->setpath('serieslist?desc_filtro=',$filtragem);
+        }
+
         return view('serieslist.index', ['series' => $series]);
     }
 
@@ -27,21 +37,22 @@ class seriesListController extends Controller
 
     public function edit($id){
         $serie = listSerie::find($id);
-        return view('serieslist.edit', compact('serie'));
+        $serieName = Serie::find($serie->idSerie);
+        return view('serieslist.edit', compact('serie'), compact('serieName'));
     }
 
     public function create() {
         return view('serieslist.create');
     }
 
-    public function store(Request $request) {
+    public function store(ListSeriesRequest $request) {
         $new_serie = $request->all();
         listSerie::Create($new_serie);
 
         return redirect()->route('serieslist');
     }
 
-    public function update($id){
+    public function update(ListSeriesRequest $request, $id){
         listSerie::find($id)->update($request->all());
         return redirect()->route('serieslist');
     }
@@ -58,6 +69,13 @@ class seriesListController extends Controller
             $status->status = "Watching";
             $status->save();
         }
+
+        $timeSerie = Serie::find($serie->idSerie);
+        $statusUser = User::find(auth()->user()->id);
+        $statusUser->increment('lifeEps', 1);
+        $statusUser->lifeTime = $statusUser->lifeTime + $timeSerie->epTime;
+        $statusUser->save();
+
         return redirect()->route('serieslist');
     }
 
@@ -73,6 +91,13 @@ class seriesListController extends Controller
             $status->status = "Plan to Watch";
             $status->save();
         }
+
+        $timeSerie = Serie::find($serie->idSerie);
+        $statusUser = User::find(auth()->user()->id);
+        $statusUser->decrement('lifeEps', 1);
+        $statusUser->lifeTime = $statusUser->lifeTime - $timeSerie->epTime;
+        $statusUser->save();
+
         return redirect()->route('serieslist');
     }
 
@@ -102,5 +127,4 @@ class seriesListController extends Controller
                             ->orderBy('nomeSerie')->paginate(10);
         return view('serieslist.index', ['series' => $series]);
     }
-
 }
