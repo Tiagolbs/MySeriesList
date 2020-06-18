@@ -227,8 +227,8 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'Status',
-            'url' => 'user/status',       
+            'text' => 'Profile',
+            'url' => 'user/profile',       
             'icon' => 'fas fa-fw fa-user',
         ],
         // [
