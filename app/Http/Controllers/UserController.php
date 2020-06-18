@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\listSerie;
+use App\Friends;
+use Auth;
+use DB;
 
 class UserController extends Controller
 {
     public function index() {
         $user = User::find(auth()->user()->id);
+
+        $friendsList = Friends::select('name', 'id')->where('idUser', auth()->user()->id)->get();
         
-        return view('user.status', ['user' => $user]);
+        return view('user.profile', compact('user'), compact('friendsList'));
     }
 
     public function edit() {
@@ -24,10 +29,12 @@ class UserController extends Controller
         return redirect()->route('serieslist');
     }
 
-    public function status($name){
+    public function profile($name){
         $user = User::where('name', '=', $name)->first();
+
+        $friendsList = Friends::select('name')->where('idUser', auth()->user()->id)->get();
         
-        return view('user.status', ['user' => $user]);
+        return view('user.profile', compact('user'), compact('friendsList'));
     }
 
     public function publicList($name){
@@ -38,5 +45,26 @@ class UserController extends Controller
                                 ->orderBy('status', 'desc')->paginate(10);
         
         return view('serieslist.publicList', ['series' => $series]);
+    }
+
+    public function addFriend($name){
+        $idFriend = User::where('name', '=', $name)->first();
+
+        $test = Friends::select('name')->where('idUser', '=', auth()->user()->id)->where('name', '=', $name)->first();
+
+        if($test == NULL){
+            $friend = new Friends();
+            $friend->idUser = auth()->user()->id;
+            $friend->idFriend = $idFriend->id;
+            $friend->name = $name;
+            $friend->save();
+        }
+
+        return redirect()->route('user.index');
+    }
+
+    public function deleteFriend($id){
+            $friend = Friends::find($id)->delete();
+            return redirect()->route('user.index');
     }
 }
