@@ -2,7 +2,6 @@
 
 @section('content')
         <center><h1 style="font-family:fantasy">SERIES</h1></center>
-
         <table class="table table-strip table-bordered table-hover">
             <thead>
                 <th>Poster</th>
