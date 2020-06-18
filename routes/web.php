@@ -33,14 +33,17 @@ Route::group(['middleware'=>'auth'], function() {
     });
 
     Route::group(['prefix'=>'user', 'where'=>['id'=>'[0-9]+']], function() {
-        Route::get('status',              ['as'=>'user.index',             'uses'=>'UserController@index']);
+        Route::any('profile',              ['as'=>'user.index',             'uses'=>'UserController@index']);
         Route::get('edit',              ['as'=>'user.edit',             'uses'=>'UserController@edit']);
         Route::put('update',              ['as'=>'user.update',             'uses'=>'UserController@update']);
+        Route::get('{name}/addFriend',            ['as'=>'user.addFriend',         'uses'=>'UserController@addFriend']);
+        Route::get('{id}/deleteFriend',            ['as'=>'user.deleteFriend',         'uses'=>'UserController@deleteFriend']);
+        Route::any('searchFriend',            ['as'=>'user.searchFriend',         'uses'=>'UserController@searchFriend']);
     });
 });
 
 Route::group(['prefix'=>'user', 'where'=>['id'=>'[0-9]+']], function() {
-    Route::get('{name}/status',            ['as'=>'user.status',             'uses'=>'UserController@status']);
+    Route::get('{name}/profile',            ['as'=>'user.profile',             'uses'=>'UserController@profile']);
     Route::get('{name}/serieslist',            ['as'=>'user.publicList',             'uses'=>'UserController@publicList']);
 });
 
