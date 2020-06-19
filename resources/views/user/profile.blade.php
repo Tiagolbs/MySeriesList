@@ -80,13 +80,15 @@
             <table class="table table-strip table-bordered table-hover">
                 <thead>
                     <th>Friends <a style='font-size:14px; float: right'href="{{ route('user.searchFriend')}}" class = "btn-sm btn-info"><b>Search Friend </b><i class="fa fa-search"></i></a></th>
+                    <th></th>
+                    <th></th>
                 </thead>
                     
             @foreach($friendsList as $friend)
                         <tr>
-                            <td  style="text-align:center; vertical-align:middle"><a style="color: black" href="{{ route('user.profile', ['name'=>$friend->name])}}"><b>{{$friend->name}}</b></a>
-                            <a style="float:right" href="{{ route('user.deleteFriend', ['id'=>$friend->id])}}" class = "btn-sm btn-danger"><b>DELETE</b></a>
-                            </td>
+                            <td  style="text-align:center; vertical-align:middle; width: 90%"><a style="color: black" href="{{ route('user.profile', ['name'=>$friend->name])}}"><b>{{$friend->name}}</b></a></td>
+                            <td stye="width:10px"><a style="float:right" href="{{ route('user.publicList', ['name'=>$friend->name])}}" class = "btn-sm btn-info"><b>LIST</b></a>
+                            <td stye="width:5%"><a style="float:right" href="{{ route('user.deleteFriend', ['id'=>$friend->id])}}" class = "btn-sm btn-danger"><b>DELETE</b></a></td>
                         </tr>
             @endforeach
             </table>
