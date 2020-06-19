@@ -11,15 +11,19 @@ use DB;
 
 class UserController extends Controller
 {
-    public function index() {
+    public function index() { #Profile privado
         $user = User::find(auth()->user()->id);
 
         $friendsList = Friends::select('name', 'id')->where('idUser', auth()->user()->id)->get();
-        
-        return view('user.profile', compact('user'), compact('friendsList'));
+
+        $countCompleted = listSerie::where('list_series.idUser', auth()->user()->id)->where('status', '=', 'Completed')->count();
+        $countPtoW = listSerie::where('list_series.idUser', auth()->user()->id)->where('status', '=', 'Plan to Watch')->count();
+        $countWatching= listSerie::where('list_series.idUser', auth()->user()->id)->where('status', '=', 'Watching')->count();
+
+        return view('user.profile', compact('user'), compact(['friendsList', 'countCompleted', 'countPtoW', 'countWatching']));
     }
 
-    public function edit() {
+    public function edit() { #Editar informações do usuário
         $user = User::find(auth()->user()->id);
         return view('user.edit', compact('user'));
     }
@@ -29,15 +33,21 @@ class UserController extends Controller
         return redirect()->route('serieslist');
     }
 
-    public function profile($name){
+    public function profile($name){ #Profile publico
         $user = User::where('name', '=', $name)->first();
 
         $friendsList = Friends::select('name')->where('idUser', auth()->user()->id)->get();
+
+        $test = Friends::select('name')->where('idUser', '=', auth()->user()->id)->where('name', '=', $name)->first();
+
+        $countCompleted = listSerie::where('list_series.idUser', $user->id)->where('status', '=', 'Completed')->count();
+        $countPtoW = listSerie::where('list_series.idUser', $user->id)->where('status', '=', 'Plan to Watch')->count();
+        $countWatching= listSerie::where('list_series.idUser', $user->id)->where('status', '=', 'Watching')->count();
         
-        return view('user.profile', compact('user'), compact('friendsList'));
+        return view('user.profile', compact('user'), compact(['friendsList', 'countCompleted', 'countPtoW', 'countWatching']))->with(compact('test'));
     }
 
-    public function publicList($name){
+    public function publicList($name){ #Lista de séries publica
         $idUser = User::where('name', '=', $name)->first();
         $series = listSerie::join('series', 'series.idSerie', '=', 'list_series.idSerie')
                                 ->where('list_series.idUser', $idUser->id)
@@ -47,7 +57,7 @@ class UserController extends Controller
         return view('serieslist.publicList', ['series' => $series]);
     }
 
-    public function addFriend($name){
+    public function addFriend($name){ #Adicionar amigo
         $idFriend = User::where('name', '=', $name)->first();
 
         $test = Friends::select('name')->where('idUser', '=', auth()->user()->id)->where('name', '=', $name)->first();
@@ -63,8 +73,20 @@ class UserController extends Controller
         return redirect()->route('user.index');
     }
 
-    public function deleteFriend($id){
+    public function deleteFriend($id){ #Remover amigo
             $friend = Friends::find($id)->delete();
             return redirect()->route('user.index');
+    }
+
+    public function searchFriend(Request $filtro){ #Procurar amigo
+        $filtragem = $filtro->get('desc_filtro');
+        if($filtragem == NULL){
+            $searchFriend = NULL;
+        }
+        else{
+            $searchFriend = User::select('name', 'id')->where('name', 'like', '%'.$filtragem.'%')->get();
+        }
+
+        return view('user.searchFriend')->with(compact('searchFriend'));
     }
 }
