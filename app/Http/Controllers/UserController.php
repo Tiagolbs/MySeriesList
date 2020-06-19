@@ -7,14 +7,16 @@ use App\User;
 use App\listSerie;
 use App\Friends;
 use Auth;
-use DB;
+use Image;
 
 class UserController extends Controller
 {
     public function index() { #Profile privado
         $user = User::find(auth()->user()->id);
 
-        $friendsList = Friends::select('name', 'id')->where('idUser', auth()->user()->id)->get();
+        $friendsList = Friends::join('users', 'users.id', '=', 'friends.idFriend')
+                                ->select('friends.name as name', 'friends.id as id', 'users.avatar as avatar')
+                                ->where('idUser', auth()->user()->id)->get();
 
         $countCompleted = listSerie::where('list_series.idUser', auth()->user()->id)->where('status', '=', 'Completed')->count();
         $countPtoW = listSerie::where('list_series.idUser', auth()->user()->id)->where('status', '=', 'Plan to Watch')->count();
@@ -88,5 +90,20 @@ class UserController extends Controller
         }
 
         return view('user.searchFriend')->with(compact('searchFriend'));
+    }
+
+    public function updateAvatar(Request $request){
+        if($request->hasFile('avatar')){
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)->resize(300,300)->save(public_path('/uploads/avatars/'.$filename));
+
+            $user = Auth::user();
+            $user->avatar = $filename;
+            $user->save();
+        }
+
+        return redirect()->route('user.index');
+
     }
 }
