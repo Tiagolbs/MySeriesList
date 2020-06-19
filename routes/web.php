@@ -39,6 +39,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('{name}/addFriend',            ['as'=>'user.addFriend',         'uses'=>'UserController@addFriend']);
         Route::get('{id}/deleteFriend',            ['as'=>'user.deleteFriend',         'uses'=>'UserController@deleteFriend']);
         Route::any('searchFriend',            ['as'=>'user.searchFriend',         'uses'=>'UserController@searchFriend']);
+        Route::post('updateAvatar', ['as'=>'user.updateAvatar', 'uses'=>'UserController@updateAvatar']);
     });
 });
 
