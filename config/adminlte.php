@@ -209,6 +209,11 @@ return [
 
     'menu' => [
         ['header' => ' '],
+        [
+            'text' => 'Search',
+            'url' => 'home',       
+            'icon' => 'fas fa-fw fa-search',
+        ],
         ['header' => 'LISTS'],
         [
             'text' => 'Series List',
