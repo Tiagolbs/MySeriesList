@@ -36,7 +36,7 @@
 
 
         <center><img style="width:150px; height: 150px; border-radius: 50%;" src="/uploads/avatars/{{$user->avatar}}"></center>
-        <center><h1 style="font-family:fantasy">Profile {{$user->name}}</h1><center>
+        <center><h1 style="font-family:fantasy">{{$user->name}}</h1><center>
 
         <?php if(auth()->user()->name != $user->name and $test == NULL):?>
                 <a href="{{ route('user.addFriend', ['name'=>$user->name])}}" class="btn btn-outline-secondary btn-sm"><b>ADD FRIEND</b></a>
