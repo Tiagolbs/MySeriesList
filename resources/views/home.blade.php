@@ -1,23 +1,18 @@
 @extends('layouts.default')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+    <center><h1 style="font-family:fantasy">MySeriesList</h1></center>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
+        {!! Form::open(['name'=>'form_name', 'route'=>'user.searchFriend']) !!}
+            <div class="sidebar-form" style="width:100%">
+                <div class="input-group" style="width:45%; margin:auto">
+                    <input type="text" name="desc_filtro" class="form-control" style="width:80% !important;" placeholder="Search tv show or movie">
+                    <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </span>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-@endsection
+        {!! Form::close() !!}
+
+        <br>
+@stop
