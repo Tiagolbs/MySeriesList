@@ -11,34 +11,41 @@
         </ul>
     @endif
 
-    <form enctype="multipart/form-data" action="updateAvatar" method="POST">
-            <label> Profile Image: </label>
+    <div style="width: 100%">
+        <div style="float: right; width: 50%;">
+        <form enctype="multipart/form-data" action="updateAvatar" method="POST">
+                <label> Profile Image: </label>
+                <br>
+                <input type = "file" name="avatar">
+                <input type = "hidden" name = "_token" value = "{{csrf_token()}}">
+                <input type = "submit" class="pull-right btn btn-sm btn-primary">
+        </form>
+        </div>
+
+        <div style="float: left; width: 30%;">
+        {!! Form::open(['route'=> ['user.update', 'id'=>\Crypt::encrypt($user->id)], 'method'=>'put']) !!}
+
+            <div hidden class="form-group">
+                {!! Form::label('id', 'id:') !!}
+                {!! Form::text('id', $user->id, ['class'=>'form-control', 'required', 'readonly']) !!}
+            </div>
+            <div class="form-group">
+                {!! Form::label('name', 'Name:') !!}
+                {!! Form::text('name', $user->name, ['class'=>'form-control']) !!}
+            </div>
+            <div class="form-group">
+                {!! Form::label('email', 'Email:') !!}
+                {!! Form::text('email', $user->email, ['class'=>'form-control']) !!}
+            </div>
+
             <br>
-            <input type = "file" name="avatar">
-            <input type = "hidden" name = "_token" value = "{{csrf_token()}}">
-            <input type = "submit" class="pull-right btn btn-sm btn-primary">
-    </form>
-    {!! Form::open(['route'=> ['user.update', 'id'=>\Crypt::encrypt($user->id)], 'method'=>'put']) !!}
 
-        <div hidden class="form-group">
-            {!! Form::label('id', 'id:') !!}
-            {!! Form::text('id', $user->id, ['class'=>'form-control', 'required', 'readonly']) !!}
-        </div>
-        <div class="form-group">
-            {!! Form::label('name', 'Name:') !!}
-            {!! Form::text('name', $user->name, ['class'=>'form-control']) !!}
-        </div>
-        <div class="form-group">
-            {!! Form::label('email', 'Email:') !!}
-            {!! Form::text('email', $user->email, ['class'=>'form-control']) !!}
-        </div>
+            <div class="form-group">
+                {!! Form::submit('Edit User', ['class' => 'btn btn-primary']) !!}
+                {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
+            </div>
 
-        <br>
-
-        <div class="form-group">
-            {!! Form::submit('Edit User', ['class' => 'btn btn-primary']) !!}
-            {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
+        {!! Form::close() !!}
         </div>
-
-    {!! Form::close() !!}
+    <div>
 @stop
