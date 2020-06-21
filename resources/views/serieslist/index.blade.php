@@ -36,7 +36,7 @@
             <tbody>
                 @foreach($series as $serie)
                     <tr>
-                        <td style="width:5%"><img width = 95.4px height = 142.8px src={{$serie->poster}} alt="poster"></td>
+                        <td style="width:5%"><img width = 95.4px height = 142.8px src="{{'https://image.tmdb.org/t/p/w500/'.$serie->poster}}" alt="poster"></td>
                         <td style="text-align:center; vertical-align:middle"><b>{{$serie->nomeSerie}} - Season {{$serie->temporada}}</b></td>
                         <td style="width:125px; text-align:center; vertical-align:middle">
                             <b>{{$serie->epsAssistidos}} / {{$serie->epsTotais}}</b>     

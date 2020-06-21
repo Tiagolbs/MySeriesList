@@ -41,6 +41,14 @@ Route::group(['middleware'=>'auth'], function() {
         Route::any('searchFriend',                  ['as'=>'user.searchFriend',         'uses'=>'UserController@searchFriend']);
         Route::post('updateAvatar',                 ['as'=>'user.updateAvatar',         'uses'=>'UserController@updateAvatar']);
     });
+
+    Route::group(['prefix'=>'home', 'where'=>['id'=>'[0-9]+']], function() {
+        Route::any('',                       ['as'=>'home',                'uses'=>'HomeController@index']);
+        Route::any('addListSeries',              ['as'=>'home.addListSeries',             'uses'=>'HomeController@addListSeries']);
+
+    });
+
+
 });
 
 Route::group(['prefix'=>'user', 'where'=>['id'=>'[0-9]+']], function() {
@@ -57,4 +65,3 @@ Route::get('series/create', 'seriesController@create');
 Route::post('series/store', 'seriesController@store');
 Route::get('movieslist', 'moviesListController@index');
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
