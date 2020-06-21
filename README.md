@@ -1,3 +1,13 @@
+## Instalação
+
+1. Clone o repositório e entre nele
+1. `composer install`
+1. Renomeie ou copie o arquivo `.env.example` para` .env`
+1. Defina seu `TMDB_TOKEN` no seu arquivo` .env`. Você pode obter uma chave de API [aqui](https://www.themoviedb.org/documentation/api).
+1. `php artisan key: generate`
+1. `php artisan serve`
+1. Visite `localhost: 8000` no seu navegador
+
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 <p align="center">
