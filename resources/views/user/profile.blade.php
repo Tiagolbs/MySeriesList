@@ -62,7 +62,7 @@
             </table>
             </div>
 
-            <div style="float: left; width: 40%">
+            <div style="float: left; width: 30%">
             <table class="table table-strip table-bordered table-hover">
                 <thead>
                     <th>Series Status Chart</th>
@@ -75,28 +75,33 @@
             </table>
             </div>
 
-            <div style="width:30%; float: left">
+            <div style="width:40%; float: left">
             <?php if(auth()->user()->name == $user->name) : ?>
             <table class="table table-strip table-bordered table-hover">
                 <thead>
                     <th>Friends</th>
+                    <th style="text-align:center">Name</th>
+                    <th></th>
+                    <th></th>
                     <th><a style='font-size:14px; float: right'href="{{ route('user.searchFriend')}}" class = "btn-sm btn-info"><b>Search Friend </b><i class="fa fa-search"></i></a></th>
-                    <th></th>
-                    <th></th>
                 </thead>
                     
             @foreach($friendsList as $friend)
                         <tr>
                             <td><img style="width:50px; height: 50px; border-radius:50%; float:left" src="/uploads/avatars/{{$friend->avatar}}"></td>
 
-                            <td  style="vertical-align:middle; text-align:center; width: 90%;">
+                            <td  style="vertical-align:middle; text-align:center; width: 30%;">
                                 <a  style="color: black" href="{{ route('user.profile', ['name'=>$friend->name])}}"><b>{{$friend->name}}</b></a>
                             </td>
-                            <td stye="width:10px vertical-align:middle"><a style="float:right" href="{{ route('user.publicList', ['name'=>$friend->name])}}" class = "btn-sm btn-info"><b>LIST</b></a>
-                            <td stye="width:5% vertical-align:middle"><a style="float:right" href="{{ route('user.deleteFriend', ['id'=>$friend->id])}}" class = "btn-sm btn-danger"><b>DELETE</b></a></td>
+                            <td style=" vertical-align:middle; text-align:center;"><a href="{{ route('user.publicList', ['name'=>$friend->name])}}" class = "btn-sm btn-info"><b>SERIES LIST</b></a>
+                            <td style=" vertical-align:middle; text-align:center;"><a href="{{ route('user.publicMoviesList', ['name'=>$friend->name])}}" class = "btn-sm btn-info"><b>MOVIES LIST</b></a>
+                            <td style="width:22%; vertical-align:middle; text-align:center;"><a href="{{ route('user.deleteFriend', ['id'=>$friend->id])}}" class = "btn-sm btn-danger"><b>DELETE</b></a></td>
                         </tr>
             @endforeach
             </table>
+            <?php else:?>
+                            <td style=" vertical-align:middle; text-align:center;"><a href="{{ route('user.publicList', ['name'=>$user->name])}}" class = "btn-sm btn-info"><b>SERIES LIST</b></a>
+                            <td style=" vertical-align:middle; text-align:center;"><a href="{{ route('user.publicMoviesList', ['name'=>$user->name])}}" class = "btn-sm btn-info"><b>MOVIES LIST</b></a>
             <?php endif ?>
             </div>
         <div>
