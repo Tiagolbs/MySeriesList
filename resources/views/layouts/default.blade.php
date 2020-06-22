@@ -6,7 +6,7 @@
     <script>
         function ConfirmaExclusao(id) {
             swal.fire({
-                title: 'Are you sure?', text: "You can add that series again later",
+                title: 'Are you sure?', text: "",
                 type: 'warning', showCancelButton: true, confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33', confirmButtonText: 'Delete',
                 cancelButtonText: 'Nope', closeOnConfirm: false,
