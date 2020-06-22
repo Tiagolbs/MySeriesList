@@ -1,6 +1,6 @@
 ## Instalação
 
-1. Clone o repositório e entre nele
+1. Clone o repositório
 1. `composer install`
 1. Renomeie ou copie o arquivo `.env.example` para` .env`
 1. Defina seu `TMDB_TOKEN` no seu arquivo` .env`. Você pode obter uma chave de API [aqui](https://www.themoviedb.org/documentation/api).
