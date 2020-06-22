@@ -17,14 +17,14 @@ class seriesListController extends Controller
             $series = listSerie::join('series', 'series.idSerie', '=', 'list_series.idSerie')
                                 ->where('list_series.idUser', auth()->user()->id)
                                 ->select('list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
-                                ->orderBy('status', 'desc')->paginate(10);
+                                ->orderBy('status', 'desc')->orderBy('nomeSerie')->orderBy('temporada')->paginate(8);
         }
         else{
             $series = listSerie::join('series', 'series.idSerie', '=', 'list_series.idSerie')
                                     ->where('list_series.idUser', auth()->user()->id)
                                     ->select('list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
                                     ->where('nomeSerie', 'like', '%'.$filtragem.'%')
-                                    ->orderBy('status', 'desc')->paginate(10)->setpath('serieslist?desc_filtro=',$filtragem);
+                                    ->orderBy('status', 'desc')->orderBy('nomeSerie')->orderBy('temporada')->paginate(8)->setpath('serieslist?desc_filtro=',$filtragem);
         }
 
         return view('serieslist.index', ['series' => $series]);

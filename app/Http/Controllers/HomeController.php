@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Http;
 use App\config\services;
 use App\Serie;
 use App\listSerie;
+use App\Movie;
+use App\listMovie;
 
 class HomeController extends Controller
 {
@@ -72,16 +74,47 @@ class HomeController extends Controller
         }
 
         $idSerie = Serie::select('idSerie')->where('idSerieImdb', '=', $idSerie)->first();
-
-        $addList = new listSerie();
-        $addList->idUser = auth()->user()->id;
-        $addList->idSerie = $idSerie->idSerie;
-        $addList->temporada = $season+1;
-        $addList->epsAssistidos = 0;
-        $addList->epsTotais = $serie['seasons'][strval($season)]['episode_count'];
-        $addList->status = "Plan to Watch";
-        $addList->save();
+        if(listSerie::where('idUser', '=', auth()->user()->id)->where('idSerie','=',$idSerie->idSerie)->where('temporada','=',$season+1)->first() == NULL){
+            $addList = new listSerie();
+            $addList->idUser = auth()->user()->id;
+            $addList->idSerie = $idSerie->idSerie;
+            $addList->temporada = $season+1;
+            $addList->epsAssistidos = 0;
+            $addList->epsTotais = $serie['seasons'][strval($season)]['episode_count'];
+            $addList->status = "Plan to Watch";
+            $addList->save();
+        }
 
         return redirect()->route('serieslist');
+    }
+
+    public function addListMovies($id){
+        $movie = Http::get('https://api.themoviedb.org/3/movie/'.$id.'?api_key='.config('services.tmdb.token'))
+        ->json();
+
+
+        if(Movie::where('idImdb', '=', $id)->first() == NULL){
+            $addMovie = new Movie();
+            $addMovie->idImdb = $movie['id'];
+            $addMovie->nome = $movie['original_title'];
+            $addMovie->poster = $movie['poster_path'];
+            $addMovie->descricao = $movie['overview'];
+            $addMovie->generoMovie = $movie['genres']['0']['name'];
+            $addMovie->notaMovie = $movie['vote_average'];
+            $addMovie->save();
+        }
+
+        $idMovie = Movie::select('idMovie')->where('idImdb', '=', $id)->first();
+        if(listMovie::where('idUser', '=', auth()->user()->id)->where('idMovie', '=', $idMovie->idMovie)->first() == NULL){
+            $addList = new listMovie();
+            $addList->idUser = auth()->user()->id;
+            $addList->idMovie = $idMovie->idMovie;
+            $addList->status = "Plan to Watch";
+            $addList->save();
+        }
+
+        return redirect()->route('movieslist');
+
+
     }
 }

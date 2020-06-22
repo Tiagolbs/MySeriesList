@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\listSerie;
 use App\Friends;
+use App\listMovie;
 use Auth;
 use Image;
 
@@ -59,6 +60,16 @@ class UserController extends Controller
         return view('serieslist.publicList', ['series' => $series]);
     }
 
+    public function publicMoviesList($name){ #Lista de filmes publica
+        $idUser = User::where('name', '=', $name)->first();
+        $movies = listMovie::join('movies', 'movies.idMovie', '=', 'list_movies.idMovie')
+                            ->where('list_movies.idUser', $idUser->id)
+                            ->select('list_movies.status as status', 'list_movies.idListMovie as idListMovies','movies.notaMovie as score','movies.poster as poster', 'movies.nome as nomeMovie', 'list_movies.created_at as createDate', 'list_movies.updated_at as lastUpdate')
+                            ->orderBy('status', 'desc')->orderBy('nomeMovie')->paginate(8);
+        
+        return view('movieslist.publicMoviesList', ['movies' => $movies]);
+    }
+
     public function addFriend($name){ #Adicionar amigo
         $idFriend = User::where('name', '=', $name)->first();
 
@@ -86,7 +97,7 @@ class UserController extends Controller
             $searchFriend = NULL;
         }
         else{
-            $searchFriend = User::select('name', 'id')->where('name', 'like', '%'.$filtragem.'%')->get();
+            $searchFriend = User::select('avatar','name', 'id')->where('name', 'like', '%'.$filtragem.'%')->get();
         }
 
         return view('user.searchFriend')->with(compact('searchFriend'));
