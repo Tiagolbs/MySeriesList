@@ -15,7 +15,7 @@ class CreateSeriesTable extends Migration
     {
         Schema::create('series', function (Blueprint $table) {
             $table->bigIncrements('idSerie');
-            $table->string('idSerieImdb', 10);
+            $table->string('idSerieImdb', 999);
             $table->string('nomeSerie', 100);
             $table->integer('numTemps');
             $table->string('descricao', 999);

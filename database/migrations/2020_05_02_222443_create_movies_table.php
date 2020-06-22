@@ -15,7 +15,7 @@ class CreateMoviesTable extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->bigIncrements('idMovie');
-            $table->string('idImbdb', 10);
+            $table->string('idImdb', 999);
             $table->string('nome', 100);
             $table->string('poster', 999);
             $table->string('descricao', 999);
