@@ -23,7 +23,7 @@
             {!! Form::label('idSerie', 'idSerie:') !!}
             {!! Form::text('idSerie', $serie->idSerie, ['class'=>'form-control', 'readonly']) !!}
         </div>
-        <div class="form-group">
+        <div hidden class="form-group">
             {!! Form::label('temporada', 'Season:') !!}
             {!! Form::text('temporada', $serie->temporada, ['class'=>'form-control']) !!}
         </div>
@@ -31,11 +31,11 @@
             {!! Form::label('epsAssistidos', 'Watched Episodes: ') !!}
             {!! Form::text('epsAssistidos', $serie->epsAssistidos, ['class'=>'form-control']) !!}
         </div>
-        <div class="form-group">
+        <div hidden class="form-group">
             {!! Form::label('epsTotais', 'Total Eps:') !!}
             {!! Form::text('epsTotais', $serie->epsTotais, ['class'=>'form-control', 'required']) !!}
         </div>
-        <div class="form-group">
+        <div hidden class="form-group">
             {!! Form::label('status', 'Status:') !!}
             {!! Form::select('status',
                             array('Completed'=>'Completed',
