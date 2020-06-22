@@ -20,13 +20,19 @@
         <table style="margin-left: auto; margin-right: auto; width: 50%" class="table table-strip table-bordered table-hover">
             <thead>
                 <th>Name</th>
+                <th></th>
             </thead>
 
             <tbody>
                 @foreach($searchFriend as $friend)
                     <tr>
-                        <td style="text-align:center; vertical-align:middle"><b>{{$friend->name}}</b>
-                        <a style="float: right" href="{{ route('user.addFriend', ['name'=>$friend->name])}}" class="btn btn-outline-secondary btn-sm"><b>ADD FRIEND</b></a>
+                        <td style="text-align:center; vertical-align:middle">
+                            <img style="width:50px; height: 50px;" src="/uploads/avatars/{{$friend->avatar}}">
+                            <a href="{{ route('user.profile', ['name'=>$friend->name])}}" <b>{{$friend->name}}</b>
+                        </td>
+                        
+                        <td width=15%>
+                            <a style="float: right" href="{{ route('user.addFriend', ['name'=>$friend->name])}}" class="btn btn-outline-secondary btn-sm"><b>ADD FRIEND</b></a>
                         </td>
                     </tr>
                 @endforeach
