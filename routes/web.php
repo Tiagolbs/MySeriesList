@@ -29,6 +29,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('completed',         ['as'=>'serieslist.onlyCompleted',      'uses'=>'seriesListController@onlyCompleted']);
         Route::get('watching',          ['as'=>'serieslist.onlyWatching',       'uses'=>'seriesListController@onlyWatching']);
         Route::get('plantowatch',       ['as'=>'serieslist.onlyPlanToWatch',    'uses'=>'seriesListController@onlyPlanToWatch']);
+        Route::get('description',       ['as'=>'serieslist.description',        'uses'=>'seriesListController@description']);
     });
 
     Route::group(['prefix'=>'user', 'where'=>['id'=>'[0-9]+']], function() {
@@ -53,7 +54,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('{id}/changeStatus',          ['as'=>'movieslist.changeStatus',                   'uses'=>'moviesListController@changeStatus']);
         Route::get('plantowatch',                ['as'=>'movieslist.onlyPlanToWatch',                'uses'=>'moviesListController@onlyPlanToWatch']);
         Route::get('onlyWatched',                ['as'=>'movieslist.onlyWatched',                    'uses'=>'moviesListController@onlyWatched']);
-
+        Route::get('description',                ['as'=>'movieslist.description',                    'uses'=>'moviesListController@description']);
     });
 
 
