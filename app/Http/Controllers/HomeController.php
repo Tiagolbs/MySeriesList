@@ -45,7 +45,7 @@ class HomeController extends Controller
             get('https://api.themoviedb.org/3/search/tv?api_key='.config('services.tmdb.token').'&query='.$filtragem)
             ->json()['results'];
         }
-
+        
         return view('home', ['popularMovies' => $popularMovies])->with(compact('popularSeries'));
     }
 
@@ -73,11 +73,14 @@ class HomeController extends Controller
             $addSerie->save();
         }
 
-        $idSerie = Serie::select('idSerie')->where('idSerieImdb', '=', $idSerie)->first();
+        $idSerie = Serie::select('idSerie', 'numTemps')->where('idSerieImdb', '=', $idSerie)->first();
         if(listSerie::where('idUser', '=', auth()->user()->id)->where('idSerie','=',$idSerie->idSerie)->where('temporada','=',$season+1)->first() == NULL){
             $addList = new listSerie();
             $addList->idUser = auth()->user()->id;
             $addList->idSerie = $idSerie->idSerie;
+            if($idSerie->numTemps < $season+1){
+                return redirect()->route('home')->with('alert','Error: Season '. ($season+1) .' does not exist --- Last Season: '.$idSerie->numTemps);
+            }
             $addList->temporada = $season+1;
             $addList->epsAssistidos = 0;
             $addList->epsTotais = $serie['seasons'][strval($season)]['episode_count'];
