@@ -48,7 +48,7 @@
 
                             <tr>
                                 <td style="width:5%; border-left: 6px solid {{$color}};"><img width = 95.4px height = 142.8px src="{{'https://image.tmdb.org/t/p/w500/'.$serie->poster}}" alt="poster"></td>
-                                <td style="text-align:center; vertical-align:middle"><b>{{$serie->nomeSerie}} - Season {{$serie->temporada}}</b></td>
+                                <td style="text-align:center; vertical-align:middle"><a href="{{ route('serieslist.description', ['id'=>\Crypt::encrypt($serie->idImdb)])}}" ><b>{{$serie->nomeSerie}} - Season {{$serie->temporada}}</b></a></td>
                                 <td style="width:125px; text-align:center; vertical-align:middle">
                                     <b>{{$serie->epsAssistidos}} / {{$serie->epsTotais}}</b> 
                                     <?php if($serie->epsAssistidos != $serie->epsTotais): ?> 
