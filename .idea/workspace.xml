@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="355677ec-a674-4cac-a3b1-f94be168b3d1" name="Default Changelist" comment="" />
+    <list default="true" id="355677ec-a674-4cac-a3b1-f94be168b3d1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/moviesListController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/moviesListController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/serieslist/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/serieslist/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Browser/DeleteTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Browser/DeleteTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Browser/EditTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Browser/EditTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/ExampleTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/ExampleTest.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
@@ -132,7 +141,7 @@
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunManager">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -151,6 +160,8 @@
       <option name="presentableId" value="Default" />
       <updated>1592776588088</updated>
       <workItem from="1592776593703" duration="2364000" />
+      <workItem from="1592888261299" duration="73000" />
+      <workItem from="1592888350757" duration="6534000" />
     </task>
     <servers />
   </component>
@@ -158,9 +169,24 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="461" y="164" key="SettingsEditor" timestamp="1592776883802">
+    <state x="510" y="326" key="SettingsEditor" timestamp="1592895593527">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1592776883802" />
+    <state x="510" y="326" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1592895593527" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/SeriesController.php</url>
+          <line>19</line>
+          <properties>
+            <option name="className" value="\App\Http\Controllers\SeriesController" />
+            <option name="methodName" value="store" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
