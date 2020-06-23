@@ -8,6 +8,7 @@ use Auth;
 use App\Http\Requests\ListSeriesRequest;
 use App\Serie;
 use App\User;
+use Illuminate\Support\Facades\Http;
 
 class seriesListController extends Controller
 {
@@ -16,13 +17,13 @@ class seriesListController extends Controller
         if($filtragem == NULL){
             $series = listSerie::join('series', 'series.idSerie', '=', 'list_series.idSerie')
                                 ->where('list_series.idUser', auth()->user()->id)
-                                ->select('list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
+                                ->select('series.idSerieImdb as idImdb','list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
                                 ->orderBy('status', 'desc')->orderBy('nomeSerie')->orderBy('temporada')->paginate(8);
         }
         else{
             $series = listSerie::join('series', 'series.idSerie', '=', 'list_series.idSerie')
                                     ->where('list_series.idUser', auth()->user()->id)
-                                    ->select('list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
+                                    ->select('series.idSerieImdb as idImdb','list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
                                     ->where('nomeSerie', 'like', '%'.$filtragem.'%')
                                     ->orderBy('status', 'desc')->orderBy('nomeSerie')->orderBy('temporada')->paginate(8)->setpath('serieslist?desc_filtro=',$filtragem);
         }
@@ -105,7 +106,7 @@ class seriesListController extends Controller
         $series = listSerie::join('series', 'series.idSerie', '=', 'list_series.idSerie')
                             ->where('list_series.idUser', auth()->user()->id)
                             ->where('list_series.status', 'Completed')
-                            ->select('list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
+                            ->select('series.idSerieImdb as idImdb','list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
                             ->orderBy('nomeSerie')->paginate(10);
         return view('serieslist.index', ['series' => $series]);
     }
@@ -114,7 +115,7 @@ class seriesListController extends Controller
         $series = listSerie::join('series', 'series.idSerie', '=', 'list_series.idSerie')
                             ->where('list_series.idUser', auth()->user()->id)
                             ->where('list_series.status', 'Watching')
-                            ->select('list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
+                            ->select('series.idSerieImdb as idImdb','list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
                             ->orderBy('nomeSerie')->paginate(10);
         return view('serieslist.index', ['series' => $series]);
     }
@@ -123,8 +124,14 @@ class seriesListController extends Controller
         $series = listSerie::join('series', 'series.idSerie', '=', 'list_series.idSerie')
                             ->where('list_series.idUser', auth()->user()->id)
                             ->where('list_series.status', 'Plan to Watch')
-                            ->select('list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
+                            ->select('series.idSerieImdb as idImdb','list_series.idListSeries as id', 'series.poster as poster', 'series.nomeSerie as nomeSerie', 'list_series.epsAssistidos as epsAssistidos', 'list_series.epsTotais as epsTotais', 'list_series.status as status', 'list_series.temporada as temporada', 'list_series.created_at as createdate', 'list_series.updated_at as lastupdate')
                             ->orderBy('nomeSerie')->paginate(10);
         return view('serieslist.index', ['series' => $series]);
+    }
+
+    public function description(Request $request){
+        $serie = Http::get('https://api.themoviedb.org/3/tv/'.\Crypt::decrypt($request->get('id')).'?api_key='.config('services.tmdb.token').'&append_to_response=videos,credits')->json();
+        
+        return view('serieslist.description', compact('serie'));
     }
 }
