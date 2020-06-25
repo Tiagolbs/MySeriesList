@@ -57,6 +57,13 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('description',                ['as'=>'movieslist.description',                    'uses'=>'moviesListController@description']);
     });
 
+    Route::group(['prefix'=>'series', 'where'=>['id'=>'[0-9]+']], function() {
+        Route::any('',                           ['as'=>'series',                                     'uses'=>'seriesController@index']);
+        Route::get('create',                    ['as'=>'series.create',                              'uses'=>'seriesController@create']);
+        Route::get('store',                     ['as'=>'series.store',                               'uses'=>'seriesController@store']);
+        Route::get('{id}/edit',                  ['as'=>'series.edit',                               'uses'=>'seriesController@edit']);
+        Route::put('{id}/update',                        ['as'=>'series.update',               'uses'=>'seriesController@update']);
+    });
 
 });
 
@@ -71,7 +78,4 @@ Route::group(['prefix'=>'user', 'where'=>['id'=>'[0-9]+']], function() {
 
 
 
-Route::get('series', 'seriesController@index');
-Route::get('series/create', 'seriesController@create');
-Route::post('series/store', 'seriesController@store');
 Auth::routes();

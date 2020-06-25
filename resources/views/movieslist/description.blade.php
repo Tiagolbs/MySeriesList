@@ -38,7 +38,7 @@
         <hr></hr>                   
 
         <h2 class="text-4xl font-semibold">Cast</h2>
-        @foreach($movie['credits']['cast'] as $cast)
+        @foreach(array_slice($movie['credits']['cast'], 0, 16) as $cast)
         <div style="display:inline-block">
             <div class="mt-8">
                         <img width=192‬px heigh=108px src="{{'https://image.tmdb.org/t/p/w500/'.$cast['profile_path']}}" alt="actor1" class="hover:opacity-75 transition ease-in-out duration-150">

@@ -16,13 +16,13 @@ class moviesListController extends Controller
         if($filtragem == NULL){
             $movies = listMovie::join('movies', 'movies.idMovie', '=', 'list_movies.idMovie')
                                 ->where('list_movies.idUser', auth()->user()->id)
-                                ->select('list_movies.status as status', 'list_movies.idListMovie as idListMovies','movies.notaMovie as score','movies.poster as poster', 'movies.nome as nomeMovie', 'list_movies.created_at as createDate', 'list_movies.updated_at as lastUpdate')
+                                ->select('movies.idImdb as idImdb','list_movies.status as status', 'list_movies.idListMovie as idListMovies','movies.notaMovie as score','movies.poster as poster', 'movies.nome as nomeMovie', 'list_movies.created_at as createDate', 'list_movies.updated_at as lastUpdate')
                                 ->orderBy('status')->orderBy('nomeMovie')->paginate(8);
         }
         else{
             $movies = listMovie::join('movies', 'movies.idMovie', '=', 'list_movies.idMovie')
                                 ->where('list_movies.idUser', auth()->user()->id)
-                                ->select('list_movies.status as status', 'list_movies.idListMovie as idListMovies','movies.notaMovie as score','movies.poster as poster', 'movies.nome as nomeMovie', 'list_movies.created_at as createDate', 'list_movies.updated_at as lastUpdate')
+                                ->select('movies.idImdb as idImdb','list_movies.status as status', 'list_movies.idListMovie as idListMovies','movies.notaMovie as score','movies.poster as poster', 'movies.nome as nomeMovie', 'list_movies.created_at as createDate', 'list_movies.updated_at as lastUpdate')
                                 ->where('movies.nome', 'like', '%'.$filtragem.'%')
                                 ->orderBy('status')->orderBy('nomeMovie')->paginate(8)->setpath('movies?desc_filtro=',$filtragem);
         }
@@ -51,7 +51,7 @@ class moviesListController extends Controller
     public function onlyPlanToWatch(){
         $movies = listMovie::join('movies', 'movies.idMovie', '=', 'list_movies.idMovie')
                                 ->where('list_movies.idUser', auth()->user()->id)
-                                ->select('list_movies.status as status', 'list_movies.idListMovie as idListMovies','movies.notaMovie as score','movies.poster as poster', 'movies.nome as nomeMovie', 'list_movies.created_at as createDate', 'list_movies.updated_at as lastUpdate')
+                                ->select('movies.idImdb as idImdb', 'list_movies.status as status', 'list_movies.idListMovie as idListMovies','movies.notaMovie as score','movies.poster as poster', 'movies.nome as nomeMovie', 'list_movies.created_at as createDate', 'list_movies.updated_at as lastUpdate')
                                 ->where('status', '=', 'Plan to Watch')
                                 ->orderBy('status')->orderBy('nomeMovie')->paginate(8);
         
@@ -61,7 +61,7 @@ class moviesListController extends Controller
     public function onlyWatched(){
         $movies = listMovie::join('movies', 'movies.idMovie', '=', 'list_movies.idMovie')
                                 ->where('list_movies.idUser', auth()->user()->id)
-                                ->select('list_movies.status as status', 'list_movies.idListMovie as idListMovies','movies.notaMovie as score','movies.poster as poster', 'movies.nome as nomeMovie', 'list_movies.created_at as createDate', 'list_movies.updated_at as lastUpdate')
+                                ->select('movies.idImdb as idImdb','list_movies.status as status', 'list_movies.idListMovie as idListMovies','movies.notaMovie as score','movies.poster as poster', 'movies.nome as nomeMovie', 'list_movies.created_at as createDate', 'list_movies.updated_at as lastUpdate')
                                 ->where('status', '=', 'Watched')
                                 ->orderBy('status')->orderBy('nomeMovie')->paginate(8);
         

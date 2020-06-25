@@ -48,7 +48,7 @@
             {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
         </div>
 
-        
+
 
     {!! Form::close() !!}
 @stop

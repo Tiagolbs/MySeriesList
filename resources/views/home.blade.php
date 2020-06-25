@@ -58,7 +58,7 @@
             <tbody>
                 @foreach($popularSeries as $Serie)
                     <tr>
-                        <td style="width:5%"><img width = 95.4px height = 142.8px src="{{'https://image.tmdb.org/t/p/w500/'.$Serie['poster_path']}}" alt="poster"></td>
+                        <td style="width:5%"><img width = 95.4px height = 142.8px src="{{'https://image.tmdb.org/t/p/w500/'.$Serie['poster_path']}}"  alt="poster"></td>
                         <td style="text-align:center; vertical-align:middle"><a href="{{ route('serieslist.description', ['id'=>\Crypt::encrypt($Serie['id'])])}}" ><b>{{$Serie['name']}}</b></a></td>
                         <td width=5% style="text-align:center; vertical-align:middle"><i style="color: #FFAE00"class="fas fa-star"></i><b>{{$Serie['vote_average']}}</b></td>
                         <td style="text-align:center; vertical-align:middle;width: 13%">

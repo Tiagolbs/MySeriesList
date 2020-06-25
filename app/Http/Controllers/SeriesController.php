@@ -21,25 +21,16 @@ class SeriesController extends Controller
         $new_serie = $request->all();
         Serie::Create($new_serie);
 
-        return redirect('series');
+        return redirect()->route('series');
     }
 
-    public function searchName($serie){
-        $series = Serie::all();
-        $series = $series->pluck('nomeSerie')->toArray();
-        return in_array($serie, $series);
+    public function edit($id) {
+        $serie = Serie::find($id);
+        return view('series.edit', compact('serie'));
     }
 
-    public function insertSerie($serie){
-        $newSerie = new Serie;
-        $newSerie->idSerieImdb = $serie['idImdb'];
-        $newSerie->nomeSerie = $serie['nomeSerie'];
-        $newSerie->numTemps = $serie['numTemps'];
-        $newSerie->descricao = $serie['descricao'];
-        $newSerie->generoSerie = $serie['generoSerie'];
-        $newSerie->notaSerie = $serie['notaSerie'];
-        $newSerie->poster = $serie['poster'];
-        $newSerie->epTime = $serie['epTime'];
-        $newSerie->save();
+    public function update(Request $request, $id) {
+        Serie::find($id)->update($request->all());
+        return redirect()->route('series');
     }
 }

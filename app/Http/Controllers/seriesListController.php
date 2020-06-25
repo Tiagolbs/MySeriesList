@@ -54,6 +54,36 @@ class seriesListController extends Controller
     }
 
     public function update(ListSeriesRequest $request, $id){
+        $serie = listSerie::find($id);
+        if($serie->epsAssistidos < $request->epsAssistidos){
+            $eps = User::select('lifeTime','lifeEps')->where('id', auth()->user()->id)->first();
+            $epsTotal = $eps->lifeEps + ($request->epsAssistidos-$serie->epsAssistidos);
+
+            $serieTime = listSerie::join('series', 'series.idSerie', '=', 'list_series.idSerie')
+            ->where('list_series.idUser', auth()->user()->id)
+            ->select('series.epTime as epTime')->where('list_series.idListSeries', $id)->first();        
+
+            $epsTime = $eps->lifeTime + ($serieTime->epTime * ($request->epsAssistidos-$serie->epsAssistidos));
+
+            $user = User::find(auth()->user()->id);
+            $user->lifeTime = $epsTime;
+            $user->lifeEps = $epsTotal;
+            $user->save();
+        }else{
+            $eps = User::select('lifeTime','lifeEps')->where('id', auth()->user()->id)->first();
+            $epsTotal = $eps->lifeEps - ($serie->epsAssistidos-$request->epsAssistidos);
+
+            $serieTime = listSerie::join('series', 'series.idSerie', '=', 'list_series.idSerie')
+            ->where('list_series.idUser', auth()->user()->id)
+            ->select('series.epTime as epTime')->where('list_series.idListSeries', $id)->first();        
+
+            $epsTime = $eps->lifeTime - ($serieTime->epTime * ($serie->epsAssistidos-$request->epsAssistidos));
+
+            $user = User::find(auth()->user()->id);
+            $user->lifeTime = $epsTime;
+            $user->lifeEps = $epsTotal;
+            $user->save();
+        }
         listSerie::find($id)->update($request->all());
         return redirect()->route('serieslist');
     }
